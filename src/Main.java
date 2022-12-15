@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Random;
 
+
+
+
+
 class plant{
     String name;
     double production_cost , security_cost;
