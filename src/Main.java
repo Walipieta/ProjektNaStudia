@@ -9,6 +9,8 @@ import java.util.Random;
 
 
 
+
+
 class plant{
     String name;
     double production_cost , security_cost;
