@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="678e4a12-8aee-41ec-a411-2819ea003f27" name="Changes" comment="commit 2 &#10;&#10;dad">
+    <list default="true" id="678e4a12-8aee-41ec-a411-2819ea003f27" name="Changes" comment="commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
@@ -76,7 +76,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671096080902</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="commit">
+      <created>1671699637496</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1671699637496</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -93,6 +100,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="commit 1" />
     <MESSAGE value="commit 2 &#10;&#10;dad" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit 2 &#10;&#10;dad" />
+    <MESSAGE value="commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit" />
   </component>
 </project>
