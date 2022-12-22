@@ -13,7 +13,7 @@ import java.util.Random;
 
 class plant{
     String name;
-    double production_cost , security_cost;
+    double cost, production_cost , security_cost;
     int productivity; //wydajność
     int age;
     int time_period;
@@ -23,9 +23,10 @@ class plant{
     public int ilosc_zbiorow;
     public boolean czy_zasadzona = false;
     public int czas_zasadzenia = 0;
-    public plant (String name,double production_cost,double security_cost,int productivity,int age,int time_period ,double plant_period,double harvest_cost,
+    public plant (String name,double cost,double production_cost,double security_cost,int productivity,int age,int time_period ,double plant_period,double harvest_cost,
                   double price){
         this.name = name;
+        this.cost = cost;
         this.production_cost = production_cost;
         this.security_cost = security_cost;
         this.productivity = productivity;
@@ -37,6 +38,12 @@ class plant{
     }
     public String get_name (){
         return  name;
+    }
+    public void set_name( String name ){
+        this.name = name;
+    }
+    public double get_cost (){
+        return cost;
     }
     public double get_Production_cost (){
         return production_cost;
@@ -192,8 +199,9 @@ class animal{
         return reporductionchance;
     }
 
-public void show (){
-    System.out.println(name,cost,gender,age);
+    public void show (){
+        System.out.println(name + " " + cost + " " + gender + " " + age);
+    }
 
 }
 
@@ -218,6 +226,9 @@ class Gracz{
     }
     public int get_food(){
         return jedzenie;
+    }
+    public double get_money(){
+        return money;
     }
     public void set_hektary( int amount ){
         hektary += amount;
@@ -249,14 +260,23 @@ class farma {
     double size;
     int ilosc_budynkow;
 
-    public farma(double size, int ilosc_budynkow) {
+    double cost ;
+
+    public farma(double size, int ilosc_budynkow, double cost) {
         this.size = size;
         this.ilosc_budynkow = ilosc_budynkow;
+        this.cost = cost;
 
     }
+    public show(){
+        System.out.println("Wielkość farmy: " + size + " ilosc_budynkow: " + ilosc_budynkow);
+    }
 
+    public get_cost(){
+        return cost;
+    }
 
-    public void ArrayList<String> pom = new ArrayList<String>();
+    /*public void ArrayList<String> pom = new ArrayList<String>();
         pom.add(ArrList.get(0).nazwa );
 
         for(
@@ -269,7 +289,7 @@ class farma {
     }
 
         System.out.println(pom.size());
-
+*/
 
 
 }
@@ -296,11 +316,33 @@ public class budynek {
 public class Main {
     public double cena = 1000;
     public static boolean sprawdzenie (Gracz g ){
-        if (g.hektary >= 20){
-
-
+        int food = 0;
+        int uniqueAnimal = 0;
+        ArrayList<Animal> rozne_zwierzeta = new ArrayList<Animal>();
+        for ( int i=0; i<g.zwierzeta_gracz.Length; i++ ){
+            if (pom.contains(ArrList.get(i).nazwa) == false)
+                if(  rozne_zwierzeta.contains(g.zwierzeta_gracz.get(i)) == false ){
+                    rozne_zwierzeta.add( g.zwierzeta_gracz.get(i) );
+                }
         }
-    }
+        uniqueAnimal = rozne_zwierzeta.Length;
+
+        int uniquePlants = 0;
+        ArrayList<Plant> rozne_rosliny = new ArrayList<Plant>();
+        for ( int i=0; i<g.rosliny_gracz.Length; i++ ){
+            if(  rozne_rosliny.contains(g.rosliny_gracz.get(i)) == false ){
+                rozne_rosliny.add( g.rosliny_gracz.get(i) );
+            }
+        }
+        uniquePlants = rozne_rosliny.Length;
+
+        for( Animal i : g.zwierzeta_gracz ){
+            food += i.get_food();
+        }
+        if (g.hektary >= 20 && food*52 <= g.get_food() && uniqueAnimal >= 5 && uniquePlants >= 5 ){
+            return true;
+        }
+        return false;
 
     public static farma generator_farm (){
         Random generator = new Random();
@@ -363,6 +405,23 @@ public class Main {
                 g.set_food( -5 );
             else
                 g.changemoney(-50);
+        }
+    }
+    public static zero_money( Gracz g ){
+        for (int i = 0; i<g.zwierzeta_gracz.Length; i++ ){
+            g.zwierzeta_gracz.get(i).set_wage(1);
+        }
+    }
+    public static zero_plony( Gracz g ){
+        int i = 0;
+        while( i < g.rosliny_gracz.Length ){
+            if( g.rosliny_gracz.get(i).czy_zasadzona == true ){
+                g.rosliny_gracz.remove(i);
+                i = 0;
+            }
+            else{
+                i++;
+            }
         }
     }
 
@@ -485,6 +544,52 @@ public class Main {
                     g.changemoney( zwierzeta.get( numer ).get_cost() );
                     g.addAnimal( zwierzeta.get( numer ), ilosc );
                 }
+                else if( wybor == 2 ){
+                    System.out.print( "Ile ziemi chcemy kupic?: " );
+                    int numer = scan.nextInt();
+                    if (g.money >= numer*cena ){
+                        g.changemoney( numer*cena );
+                        g.set_hektary( numer );
+                    }
+                }
+                else if( wybor == 3 ){
+                    farma f1 = generator_farm();
+                    farma f2 = generator_farm();
+                    farma f3 = generator_farm();
+                    f1.show();
+                    f2.show();
+                    f3.show();
+                    System.out.print( "Co kupic?: " );
+                    int numer = scan.nextInt();
+
+                    if( numer == 1 && f1.get_cost() <= g.get_money() && f1.get_hektary() <= g.get_hektary() ){
+                        g.changemoney( f1.get_cost() );
+                        g.farmy_gracz.add(f1);
+                        g.set_hektary( -f1.hektary );
+                    }
+                    else if( numer == 2 && f2.get_cost() <= g.get_money() && f2.get_hektary() <= g.get_hektary() ){
+                        g.changemoney( f2.get_cost() );
+                        g.farmy_gracz.add(f2);
+                        g.set_hektary( -f2.hektary );
+                    }
+                    else if( numer == 3 && f3.get_cost() <= g.get_money() && f3.get_hektary() <= g.get_hektary() ){
+                        g.changemoney( f3.get_cost() );
+                        g.farmy_gracz.add(f3);
+                        g.set_hektary( -f3.hektary );
+                    }
+                }
+                else if( wybor == 5 ) {
+                    for (Plant i : rosliny) {
+                        i.show();
+                    }
+                    System.out.print("Co kupic i ile?: ");
+                    int numer = scan.nextInt();
+                    int ilosc = scan.nextInt();
+                    if (g.money >= rosliny.get(numer).get_cost()) {
+                        g.changemoney(rosliny.get(numer).get_cost());
+                        g.addPlant(rosliny.get(numer), ilosc);
+                    }
+                }
                 else if ( wybor == 6){
                     double zysk_ = 0;
                     for( Plant i : g.rosliny_gracz ){
@@ -516,6 +621,22 @@ public class Main {
                         g.rosliny_gracz.get(numer).czy_zasadzona = true;
                     }
 
+
+                }
+                else if( wybor == 9 ){
+                    for (int i=0; i< g.rosliny_gracz.Length; i++ ){
+                        if( g.get_money() <= g.rosliny_gracz.get(i).getHarvest_cost() && g.rosliny_gracz.get(i).get_age() >= g.rosliny_gracz.get(i).getPlant_period() ){
+                            g.changemoney( g.rosliny_gracz.get(i).getHarvest_cost() );
+                            g.set_food() += g.rosliny_gracz.get(i).get_productivity();
+                            g.rosliny_gracz.get(i).ilosc_zbiorow += g.rosliny_gracz.get(i).get_productivity();
+                            g.rosliny_gracz.get(i).set_age( 0 );
+                            g.rosliny_gracz.get(i).set_czy_zasadzona( false );
+                        }
+                    }
+
+                }
+                else if (wybor == 10) {
+                    System.out.println("Posiadamy aktualnie: " + g.get_food() + " jedzenia");
                 }
                 else if (wybor == 11){
                     for( Animal i : g.zwierzeta_gracz ){
@@ -550,10 +671,7 @@ public class Main {
                     losowosc = true;
                 }
             }
-
-            }
-
-           tydzien++;
+            tydzien++;
             for( Plant i : g.rosliny_gracz ){
                 if( i.czas_zasadzenia )
                     i.czas_zasadzenia++;
@@ -561,6 +679,18 @@ public class Main {
             for( Animal i : g.zwierzeta_gracz ){
                 i.age++;
             }
+
+            if( g.money <= 0 ){
+                zero_money(g);
+                int losowe = generator.nextInt(100);
+                if( losowe > 50 && losowe < 60 ){
+                    zero_plony(g);
+                }
+            }
+
+
+
+
         }
 
 
