@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="678e4a12-8aee-41ec-a411-2819ea003f27" name="Changes" comment="commit">
+    <list default="true" id="678e4a12-8aee-41ec-a411-2819ea003f27" name="Changes" comment=" tlumaczenie poprawki">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
@@ -83,7 +83,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671699637496</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary=" tlumaczenie poprawki">
+      <created>1671744376498</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1671744376498</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -101,6 +108,7 @@
     <MESSAGE value="commit 1" />
     <MESSAGE value="commit 2 &#10;&#10;dad" />
     <MESSAGE value="commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit" />
+    <MESSAGE value=" tlumaczenie poprawki" />
+    <option name="LAST_COMMIT_MESSAGE" value=" tlumaczenie poprawki" />
   </component>
 </project>
