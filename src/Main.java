@@ -4,12 +4,6 @@ import java.util.ArrayList;
 import java.util.Scanner; // zbiera cos z pliku
 import java.util.Random;  // losowosci
 
-
-
-
-
-
-
 class Plant{
     String name; // nazwa rosliny
     double cost, production_cost, security_cost;  // koszt przygotowania ziemi  , koszty produkcji , koszt ochrony przed szkodnikami
@@ -46,7 +40,7 @@ class Plant{
     public double get_Production_cost (){return production_cost;}
     public void set_Production_cost (double production_cost){this.production_cost = cost;}
 
-    public double getSecurity_cost (){return security_cost;}
+    public double get_security_cost (){return security_cost;}
     public void set_security_cost (double security_cost){this.security_cost = security_cost;}
 
     public int get_productivity(){return productivity;}
@@ -90,7 +84,6 @@ class Plant{
     }
 
 }
-
 class Animal{
     String name; // co to za zwierzak
     int age; // w tygodniach wiek zwierzaka
@@ -176,14 +169,10 @@ class Animal{
     }
 
 }
-
-
-
-
 class Player{
     String name;
     double money;
-    int acres;
+    double acres;
     public ArrayList<Animal> animal_player = new ArrayList<Animal>();
     public ArrayList <Plant> plant_player = new ArrayList<Plant>();
     public ArrayList <Farm> farm_player = new ArrayList<Farm>();
@@ -207,8 +196,8 @@ class Player{
     public void set_food (int food){this.food += food;}
     public double get_money(){return money;}
     public void set_money (double money){this.money = money;}
-    public int get_acres (){return acres;}
-    public void set_acres( int amount ){acres += amount;}
+    public double get_acres (){return acres;}
+    public void set_acres( double amount ){acres += amount;}
     public void changemoney( double money ){this.money -= money;}
     public void addmoney( double money ){this.money += money;}
     public void addAnimal( Animal a ){animal_player.add(a);}
@@ -217,7 +206,8 @@ class Player{
     public void removePlant(Plant a){plant_player.remove(a);}
 }
 class Farm {
-    int size, buildings_amount;
+    double size;
+    int buildings_amount;
     public ArrayList <Building> buildings_farm = new ArrayList<Building>();
     double cost;
 
@@ -231,11 +221,11 @@ class Farm {
         System.out.println("Size of Farm: " + size + " buildings_amount: " + buildings_amount);
     }
 
-    public void set_size(int size){ this.size = size; }
-    public int get_size(){ return size; }
+    public void set_size(double size){ this.size = size; }
+    public double get_size(){ return size; }
 
     public void set_buildings_amount(int buildings_amount){ this.buildings_amount = buildings_amount; }
-    public double get_buildings_amount(){ return buildings_amount; }
+    public int get_buildings_amount(){ return buildings_amount; }
 
     public void set_cost(double cost){ this.cost = cost; }
     public double get_cost(){ return cost; }
@@ -243,11 +233,6 @@ class Farm {
     public void addFarm( Building a ){
         buildings_farm.add(a);
     }
-
-
-
-
-
 
 }
 class Building {
@@ -269,11 +254,38 @@ class Building {
     public String get_name(){return name;}
     public void set_name( String name ){ this.name = name;}
 
-
-
- }
+    public void show (){ System.out.println(name + " " + price + " " + surface);}
+}
 public class Main {
-    public double price = 1000;
+
+    public static boolean check (Player g){
+        int food = 0;
+        int uniqueAnimal = 0;
+        ArrayList<Animal> diffrent_animals = new ArrayList<Animal>();
+        for ( int i=0; i<g.animal_player.size(); i++ ){
+            if(  diffrent_animals.contains(g.animal_player.get(i)) == false ){
+                diffrent_animals.add( g.animal_player.get(i) );
+            }
+        }
+        uniqueAnimal = diffrent_animals.size();
+
+        int uniquePlants = 0;
+        ArrayList<Plant> diffrent_plants = new ArrayList<Plant>();
+        for ( int i=0; i<g.plant_player.size(); i++ ){
+            if(  diffrent_plants.contains(g.plant_player.get(i)) == false ){
+                diffrent_plants.add( g.plant_player.get(i) );
+            }
+        }
+        uniquePlants = diffrent_plants.size();
+
+        for( Animal i : g.animal_player ){
+            food += i.get_food();
+        }
+        if (g.acres >= 20 && food*52 <= g.get_food() && uniqueAnimal >= 5 && uniquePlants >= 5 ){
+            return true;
+        }
+        return false;
+    }
 
     public static Farm generator_farm (){
         Random generator = new Random();
@@ -284,7 +296,7 @@ public class Main {
         return X;
     }
 
-    public void mass_up( ArrayList<Animal> a, ArrayList <Plant> p ){
+    public static void mass_up( ArrayList<Animal> a, ArrayList <Plant> p ){
         for( Animal i : a )
             i.wage++;
         for( Plant i : p )
@@ -294,35 +306,38 @@ public class Main {
     public static void reproduction(ArrayList<Animal> a, Player g){
         ArrayList<Animal> z_g = new ArrayList<Animal>();
         ArrayList <Integer>amount_z_g = new ArrayList<Integer>();
+        ArrayList <String> names_z_g = new ArrayList<String>();
 
-        z_g.add( a.get(0).get_name(),"xxx" );
+        names_z_g.add( a.get(0).get_name() );
+        z_g.add( a.get(0) );
         amount_z_g.add(1);
 
-        for (int i = 0; i<a.Size; i++ ){
+        for (int i = 0; i<a.size(); i++ ){
             boolean ok = false;
-            for (int j = 0; j<z_g.Size; j++ ){
-                if( a.get(i) == z_g.get(j) ){
-                    amount_z_g[j]++;
+            for (int j = 0; j<names_z_g.size(); j++ ){
+                if( a.get(i).get_name() == names_z_g.get(j) ){
+                    amount_z_g.set(j, amount_z_g.get(j)+1);
                     ok = true;
                     break;
                 }
             }
             if( ok == false ){
+                names_z_g.add( a.get(i).get_name() );
                 z_g.add( a.get(i) );
                 amount_z_g.add(1);
             }
         }
 
-        for (int i=0; i<z_g.Size; i++ ){
+        for (int i=0; i<z_g.size(); i++ ){
             if(amount_z_g.get(i) > 1 ){
-                Animal animal = new Animal(z_g.get(i).get_name(), 0 ,z_g.get(i).get_gender(),z_g.get(i).get_lifeperiod(),z_g.get(i).get_if_eggs(),z_g.get(i).get_if_milk(),z_g.get(i).get_cost(),z_g.get(i).get_wage(),z_g.get(i).get_wageplus(),z_g.get(i).get_mature(),z_g.get(i).get_height(),z_g.get(i).get_reproduction(),z_g.get(i).get_food(),z_g.get(i).get_Type_food(),z_g.get(i).get_reproductionchance());
+                Animal animal = new Animal(z_g.get(i).get_name(), 0 ,z_g.get(i).get_gender(),z_g.get(i).get_lifeperiod(),z_g.get(i).get_if_eggs(),z_g.get(i).get_if_milk(),z_g.get(i).get_cost(),z_g.get(i).get_wage(),z_g.get(i).get_wageplus(),z_g.get(i).get_mature(),z_g.get(i).get_height(),z_g.get(i).get_reproduction(),z_g.get(i).get_food(),z_g.get(i).get_type_food(),z_g.get(i).get_reproductionchance());
                 g.animal_player.add( animal );
             }
         }
     }
     public static void protection(ArrayList<Plant> p, Player g){
         for( Plant i : p ){
-            g.changemoney( i.get_Security_cost );
+            g.changemoney( i.get_security_cost() );
         }
     }
     public static void if_eggs_if_milk(ArrayList<Animal> a, Player g){
@@ -340,13 +355,13 @@ public class Main {
         }
     }
     public static void zero_money(Player g){
-        for (int i = 0; i<g.animal_player.Size; i++ ){
+        for (int i = 0; i<g.animal_player.size(); i++ ){
             g.animal_player.get(i).set_wage(1);
         }
     }
     public static void zero_harvest(Player g){
         int i = 0;
-        while( i < g.plant_player.Size ){
+        while( i < g.plant_player.size() ){
             if( g.plant_player.get(i).if_seed == true ){
                 g.plant_player.remove(i);
                 i = 0;
@@ -356,7 +371,8 @@ public class Main {
             }
         }
     }
-    public static void drought( g.plant_player, Player g ){
+
+    public static void drought( Player g ){
         System.out.println("Drought has come, watch your crops");
         int i = 0;
         while( i < g.plant_player.size() ){
@@ -368,11 +384,12 @@ public class Main {
             }
         }
     }
-    public static void beetle( g.plant_player, Player g ){
-        System.out.println("The beetle plague has arrived. Your corn and potatoes are no longer safe");
+
+    public static void beetle( Player g ){
+        System.out.println("The beetle plague has arrived. Your pszenica and tomatoes are no longer safe");
         int i = 0;
         while( i < g.plant_player.size() ){
-            if( g.plant_player.get(i).if_seed == true && (g.plant_player.get(i).get_name() == 'corn' || g.plant_player.get(i).get_name() == 'potatoes') ){
+            if( g.plant_player.get(i).if_seed == true && (g.plant_player.get(i).get_name() == "pszenica" || g.plant_player.get(i).get_name() == "pomidor") ){
                 g.plant_player.remove(i);
                 i = 0;
             }
@@ -385,12 +402,15 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         File file1 = new File("animal.txt");
         File file2 = new File("plant.txt");
+        File file3 = new File("buildings.txt");
         Scanner in = new Scanner(file1);
         Scanner in2 = new Scanner(file2);
+        Scanner in3 = new Scanner(file3);
         Scanner scan = new Scanner(System.in);
         Random generator = new Random();
         ArrayList <Animal> animals = new ArrayList<Animal>();
         ArrayList <Plant>  plants = new ArrayList<Plant>();
+        ArrayList <Building> buildings = new ArrayList<Building>();
         Player g = new Player();
         Player player1 = new Player();
         Player player2 = new Player();
@@ -402,6 +422,7 @@ public class Main {
         player_name = scan.next();
         player2.set_name(player_name);
         int turn = 0;
+        double ground_price = 1000;
 
         String name;
         int age; // w tygodniach wiek zwierzaka
@@ -461,6 +482,17 @@ public class Main {
             plants.add( plant );
         }
 
+        double surface;
+
+        for ( int i=0; i<8; i++){
+            name = in3.next();
+            surface = in3.nextDouble();
+            price = in3.nextDouble();
+
+            Building building = new Building(name, surface, price);
+            buildings.add( building );
+        }
+
         int week = 1;
 
         while( true ) {
@@ -515,8 +547,8 @@ public class Main {
                 } else if (choice == 2) {
                     System.out.print("How much ground do you want to buy?: ");
                     int number = scan.nextInt();
-                    if (g.money >= number * price) {
-                        g.changemoney(number * price);
+                    if (g.money >= number * ground_price) {
+                        g.changemoney(number * ground_price);
                         g.set_acres(number);
                     }
                 } else if (choice == 3) {
@@ -548,11 +580,11 @@ public class Main {
                     }
                     System.out.print("What do you want to buy?: ");
                     int number = scan.nextInt();
-                    for (int i = 0; i < farm_player.Length; i++) {
-                        if (g.get_money() >= buildings.get(number).get_cost() && g.farm_player.get(i).get_amount_of_buildings() >= 1 && g.farm_player.get(i).get_size() >= buildings.get(number).get_surface()) {
-                            g.changemoney(buildings.get(number).get_cost());
-                            g.farm_player.get(i).get_amount_of_buildings() -= 1;
-                            g.farm_player.get(i).get_size() -= buildings.get(number).get_surface();
+                    for (int i = 0; i < g.farm_player.size(); i++) {
+                        if (g.get_money() >= buildings.get(number).get_price() && g.farm_player.get(i).get_buildings_amount() >= 1 && g.farm_player.get(i).get_size() >= buildings.get(number).get_surface()) {
+                            g.changemoney(buildings.get(number).get_price());
+                            g.farm_player.get(i).set_buildings_amount( g.farm_player.get(i).get_buildings_amount()-1 );
+                            g.farm_player.get(i).set_size( g.farm_player.get(i).get_size() - buildings.get(number).get_surface() );
                             g.farm_player.get(i).addFarm(buildings.get(number));
                             break;
                         }
@@ -588,9 +620,9 @@ public class Main {
                     }
                     System.out.print("What do we seed?: ");
                     int number = scan.nextInt();
-                    if (g.get_money() >= (plants.get(number).get_Production_cost() + plants.get(number).getSecurity_cost())) {
+                    if (g.get_money() >= (plants.get(number).get_Production_cost() + plants.get(number).get_security_cost())) {
                         g.changemoney(plants.get(number).get_Production_cost());
-                        g.changemoney(plants.get(number).getSecurity_cost());
+                        g.changemoney(plants.get(number).get_security_cost());
                         g.plant_player.get(number).if_seed = true;
                     }
                 } else if (choice == 9) {
@@ -615,12 +647,11 @@ public class Main {
                     }
                 }
 
-                if (check()) {
+                if (check(g)) {
                     if (turn % 2 == 0)
                         System.out.println("Win Player 1");
                     else
                         System.out.println("Win Player 2");
-                    break;
                     break;
                 }
 
@@ -641,11 +672,11 @@ public class Main {
                     feeding(g.animal_player, g);
                     randomness = true;
                 } else if (random > 20 && random < 25 && randomness == false) {
-                    drought(g.plant_player, g);
+                    drought(g);
                     randomness = true;
 
                 } else if (random > 25 && random < 30 && randomness == false) {
-                    beetle(p.plant_player, g);
+                    beetle(g);
                     randomness = true;
                 }
             }
@@ -658,11 +689,11 @@ public class Main {
             turn++;
 
             for (Plant i : g.plant_player) {
-                if (boolean.time_seed)
-                    i.time_seed++;
+                if (i.get_time_seed() > 0)
+                    i.set_time_seed( i.get_time_seed()+1 );
             }
             for (Animal i : g.animal_player) {
-                i.age++;
+                i.set_age( i.get_age() + 1 );
             }
 
             if (g.money <= 0) {

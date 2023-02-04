@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="678e4a12-8aee-41ec-a411-2819ea003f27" name="Changes" comment=" tlumaczenie poprawki">
+    <list default="true" id="678e4a12-8aee-41ec-a411-2819ea003f27" name="Changes" comment="koncowka">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
@@ -15,6 +15,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectId" id="2HP2IKrq0ub1647lbFPOJrTESa9" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -90,7 +93,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671744376498</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="koncowka">
+      <created>1675158536262</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1675158536262</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -109,6 +119,7 @@
     <MESSAGE value="commit 2 &#10;&#10;dad" />
     <MESSAGE value="commit" />
     <MESSAGE value=" tlumaczenie poprawki" />
-    <option name="LAST_COMMIT_MESSAGE" value=" tlumaczenie poprawki" />
+    <MESSAGE value="koncowka" />
+    <option name="LAST_COMMIT_MESSAGE" value="koncowka" />
   </component>
 </project>
